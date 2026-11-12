@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Занзибар — Нунгви и Кендва</title>
+<style>
+  :root {
+    --paper: #f6f1e8;
+    --ink: #18282e;
+    --ocean: #0e4d5c;
+    --deep: #0b303a;
+    --coral: #a64e3a;
+    --sand: #e8d8c0;
+    --muted: #5a686e;
+    --white: #fffcf7;
+    --good: #1e6b52;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #1a1a1a; font-family: Calibri, "Segoe UI", sans-serif; color: var(--ink); }
+  .deck { height: 100%; }
+  .slide {
+    display: none;
+    height: 100%;
+    padding: 28px 36px 56px;
+    background: var(--paper);
+    overflow: auto;
+  }
+  .slide.active { display: block; }
+  h1 { margin: 0 0 6px; font-size: 32px; color: var(--deep); font-weight: 700; }
+  h2 { margin: 0; font-size: 26px; color: #fff; }
+  .sub { color: var(--muted); margin: 0 0 16px; }
+  .kicker { color: var(--sand); font-size: 13px; letter-spacing: .02em; }
+  .bar { height: 6px; background: var(--ocean); margin: -28px -36px 18px; }
+  .hotel-head {
+    background: var(--ocean);
+    color: #fff;
+    margin: -28px -36px 14px;
+    padding: 14px 36px 16px;
+  }
+  .hotel-head .row { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; }
+  .score { font-size: 14px; text-align: right; }
+  .photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .photos figure { margin: 0; }
+  .photos img { width: 100%; height: 168px; object-fit: cover; display: block; background: #ddd; }
+  .note { color: var(--muted); font-size: 12px; margin: 6px 0 12px; }
+  .split { display: grid; grid-template-columns: 1.35fr .85fr; gap: 12px; }
+  .card { background: var(--white); padding: 12px 14px; }
+  .card p { margin: 0 0 8px; font-size: 14.5px; line-height: 1.35; }
+  .card p:last-child { margin: 0; }
+  .prices { font-size: 14px; line-height: 1.35; }
+  .prices b { color: var(--ocean); }
+  .ok { color: var(--good); font-weight: 700; }
+  .bad { color: var(--coral); font-weight: 700; }
+  .climate { background: var(--sand); padding: 10px 14px; margin-top: 12px; font-size: 14.5px; line-height: 1.35; }
+  .nav {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 44px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px; background: var(--deep); color: #efeae2; font-size: 14px;
+  }
+  button {
+    background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.35);
+    padding: 6px 14px; font: inherit; cursor: pointer;
+  }
+  button:hover { background: rgba(255,255,255,.1); }
+  .hero {
+    display: none; height: 100%; padding: 0; position: relative; background: #000;
+  }
+  .hero.active { display: block; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; }
+  .hero .veil {
+    position: absolute; left: 0; right: 0; bottom: 44px;
+    padding: 28px 40px 32px; background: rgba(11,48,58,.88); color: #fff;
+  }
+  .hero h1 { color: #fff; font-size: 48px; }
+  .hero .line { color: var(--sand); font-size: 22px; margin-bottom: 8px; }
+  .chip { display: inline-block; background: var(--coral); color: #fff; font-weight: 700; padding: 8px 14px; margin-top: 10px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .cols img { width: 100%; height: 210px; object-fit: cover; display: block; }
+  .tag { color: #fff; padding: 6px 10px; font-weight: 700; font-size: 13px; }
+  .tag.n { background: var(--ocean); }
+  .tag.k { background: var(--coral); }
+  .call { background: var(--white); padding: 12px 14px; margin-top: 12px; }
+  .call h3 { margin: 0 0 6px; color: var(--ocean); font-size: 16px; }
+  table { width: 100%; border-collapse: collapse; background: var(--white); font-size: 14px; }
+  th { background: var(--ocean); color: #fff; text-align: left; padding: 8px 10px; font-weight: 700; }
+  td { padding: 8px 10px; vertical-align: top; border-bottom: 1px solid #eadfce; }
+  .bars { margin-top: 8px; }
+  .brow { display: grid; grid-template-columns: 220px 1fr 70px; gap: 10px; align-items: center; background: var(--white); padding: 10px 12px; margin-bottom: 8px; }
+  .track { background: var(--sand); height: 12px; }
+  .fill { background: var(--ocean); height: 12px; }
+  .fill.top { background: var(--coral); }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; margin: 8px 0 12px; }
+  .sw { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; }
+  .chart { display: flex; align-items: flex-end; gap: 8px; height: 180px; margin: 8px 0 4px; }
+  .col { flex: 1; text-align: center; font-size: 11px; }
+  .col .stem { width: 100%; background: #a8a49a; }
+  .col.best .stem { background: var(--ocean); }
+  .col.hot .stem { background: #c4944e; }
+  .col.wet .stem { background: var(--coral); }
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; }
+  .three .card b { display: block; font-size: 22px; color: var(--deep); }
+  .three .card em { color: var(--coral); font-style: normal; font-weight: 700; }
+  .band { background: var(--ocean); color: #fff; padding: 14px 16px; margin-top: 12px; }
+  .band h3 { margin: 0 0 6px; }
+  ul { margin: 8px 0 0; padding-left: 18px; }
+  li { margin: 0 0 6px; line-height: 1.35; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<section class="slide hero active">
+  <img src="photos/palace-hero.jpg" alt="Пляж Нунгви и отель Riu Palace">
+  <div class="veil">
+    <h1>ЗАНЗИБАР</h1>
+    <div class="line">Нунгви и Кендва</div>
+    <div>Всё включено · 14 ночей · двое взрослых · отель без перелёта</div>
+    <div class="chip">2 000 – 3 000 €</div>
+    <div style="margin-top:10px;color:#dcd6cc">Цены на 12 ноября 2026. Курс ЕЦБ: 1 USD = 0,9024 EUR. Стрелки влево и вправо листают слайды.</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="bar"></div>
+  <h1>Два соседних берега</h1>
+  <p class="sub">Нунгви и Кендва стоят в трёх километрах друг от друга. Климат один. Пляж и ценник разные.</p>
+  <div class="cols">
+    <div>
+      <img src="photos/beach-nungwi.jpg" alt="Пляж Нунгви в отлив">
+      <div class="tag n">НУНГВИ · отлив, Wikimedia</div>
+      <p>Северная оконечность, закаты и деревня с барами. Море на отливе отходит далеко: купаться удобнее по высокой воде. Здесь стоят крупные all inclusive: оба Riu, My Blue и Sandies Baobab.</p>
+    </div>
+    <div>
+      <img src="photos/beach-kendwa.jpg" alt="Пляж Кендвы">
+      <div class="tag k">КЕНДВА · Wikimedia</div>
+      <p>Сразу южнее. Вода глубже, купаться можно почти при любом приливе. Вечером Full Moon Party. Настоящий all inclusive здесь начинается сильно выше 3 000 € за две недели.</p>
+    </div>
+  </div>
+  <div class="call">
+    <h3>Почему в подборке четыре отеля Нунгви, а не Кендва</h3>
+    <p>Gold Zanzibar на пляже Кендвы продаёт all inclusive примерно от 545 USD с человека за ночь. На двоих и 14 ночей это около 13 800 €. Zuri и Royal Zanzibar тоже выше потолка. Kendwa Rocks стоит на лучшем купальном пляже, но это завтрак или полупансион, не всё включено. Sunset Kendwa в официальном прайсе 2026 тоже с завтраком, от 110 USD за номер в низкий сезон.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="bar"></div>
+  <h1>Когда здесь лучший климат</h1>
+  <p class="sub">Осадки по месяцам, Нунгви. Многолетняя модель climate-data.org, миллиметры, не прогноз на конкретный год.</p>
+  <div class="legend">
+    <span><i class="sw" style="background:#0e4d5c"></i>Июнь–октябрь, лучший климат</span>
+    <span><i class="sw" style="background:#c4944e"></i>Январь–февраль, сухо, но жарко</span>
+    <span><i class="sw" style="background:#a64e3a"></i>Апрель–май, длинные дожди</span>
+    <span><i class="sw" style="background:#a8a49a"></i>Переходные месяцы</span>
+  </div>
+  <div class="chart" id="chart"></div>
+  <div class="call">
+    <h3>Лучший сезон для визита — июнь–октябрь, ядро июля, августа и сентября</h3>
+    <p>Днём около 25–27 °C, вечером свежее из-за южного пассата. Дождя мало: в модели 39–77 мм в месяц против 278 мм в апреле. Январь и февраль — второе сухое окно, море самое тёплое, но воздух жарче и это европейский высокий сезон. Апрель и май для пляжа слабые. Короткий дождь ноября и декабря обычно проходит ливнем, а декабрь уже дорогой из-за праздников.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="bar"></div>
+  <h1>Как устроен бюджет 2 000–3 000 €</h1>
+  <p class="sub">Считается только отель на двоих, 14 ночей, один номер, всё включено. Перелёт, трансфер и виза отдельно.</p>
+  <div class="three">
+    <div class="card"><b>2 000 €</b><em>143 € за ночь</em><div>нижняя граница за номер на двоих</div></div>
+    <div class="card"><b>3 000 €</b><em>214 € за ночь</em><div>потолок за номер на двоих</div></div>
+    <div class="card"><b>Курс</b><em>1 USD = 0,90 €</em><div>ЕЦБ, 12 ноября 2026</div></div>
+  </div>
+  <div class="card">
+    <p>Сайты RIU и Booking показывают самую дешёвую свободную ночь, а не стоимость двух недель подряд. Сумма за 14 ночей округлена до 10 €: ночной тариф × 14 × 0,9024. Это ориентир, не ваучер.</p>
+    <p>В пакет не входят перелёт, трансфер из аэропорта (дорога около часа–полутора), виза, страховка, спа, дайвинг, экскурсии и чаевые.</p>
+  </div>
+  <div class="band">
+    <h3>Главное противоречие</h3>
+    <p>Лучшая погода и нижняя цена не совпадают. Июль и август — самое комфортное окно и пик цен. Апрель и май — самые дешёвые и самые мокрые. Компромисс для бюджета 3 000 €: июнь или вторая половина сентября и октябрь.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="hotel-head">
+    <div class="kicker">Нунгви · 5* · всё включено 24 часа</div>
+    <div class="row"><h2>Hotel Riu Palace Zanzibar</h2><div class="score">Tripadvisor 4,7 · 5 599 отзывов</div></div>
+  </div>
+  <div class="photos">
+    <figure><img src="photos/palace-hero.jpg" alt="Территория Riu Palace"></figure>
+    <figure><img src="photos/palace-poolbeach.jpg" alt="Бассейн у моря"></figure>
+    <figure><img src="photos/palace-room.jpg" alt="Номер"></figure>
+    <figure><img src="photos/palace-rest.jpg" alt="Ресторан"></figure>
+  </div>
+  <p class="note">Фото: официальный сайт riu.com.</p>
+  <div class="split">
+    <div class="card">
+      <p>Пляж Нунгви, северная оконечность, в паре километров от Кендвы. Около 300 номеров: junior suite с видом во двор, обычный junior suite, suite, swim-up и виллы.</p>
+      <p>All inclusive 24 часа: основной буфет, вечером по записи fusion, стейкхаус и средиземноморская кухня, снеки, местный и импортный алкоголь, минибар. Несколько бассейнов, зал, шоу. Спа и дайвинг отдельно. На отливе море отходит дальше, чем на Кендве.</p>
+      <p>Гости хвалят чистоту, еду и персонал. Реже пишут про кондиционер и соседнюю стройку. С ноября 2025 справочники описывают отель как семейный, с клубом RIU Land. Ограничение 18+ у части категорий нужно сверить при бронировании.</p>
+    </div>
+    <div class="card prices">
+      <b>Минимум на riu.com, 12.11.2026</b>
+      <p>Junior suite, двор, от 173 USD/ночь<br><span class="ok">14 ночей ≈ 2 190 €</span></p>
+      <p>Junior suite 190–212 USD ≈ 2 400–2 680 €<br>Suite 233 USD ≈ 2 940 €<br>Swim-up и море 225–268 USD ≈ <span class="bad">2 840–3 390 €</span><br>Вилла 488 USD ≈ 6 170 €</p>
+      <p><b>Агрегаторы в тот же день</b><br><span class="bad">Booking от 274 USD ≈ 3 460 €</span><br><span class="bad">Агенты около 344 USD ≈ 4 350 €</span></p>
+    </div>
+  </div>
+  <div class="climate">Лучший климат: июль–сентябрь, сухо и около 25 °C. В эти месяцы, особенно в июле и августе, 14 ночей чаще выходят за 3 000 €. За той же погодой разумнее июнь и конец сентября–октябрь, с пересчётом в калькуляторе RIU.</div>
+</section>
+
+<section class="slide">
+  <div class="hotel-head">
+    <div class="kicker">Нунгви · 4* на сайте RIU · всё включено 24 часа</div>
+    <div class="row"><h2>Hotel Riu Jambo</h2><div class="score">Tripadvisor 4,6 · 1 965 отзывов</div></div>
+  </div>
+  <div class="photos">
+    <figure><img src="photos/jambo-hero.jpg" alt="Riu Jambo"></figure>
+    <figure><img src="photos/jambo-pool.jpg" alt="Бассейн"></figure>
+    <figure><img src="photos/jambo-room.jpg" alt="Номер"></figure>
+    <figure><img src="photos/jambo-rest.jpg" alt="Ресторан"></figure>
+  </div>
+  <p class="note">Фото: riu.com. В справочнике GIATA отель иногда помечен как 5*.</p>
+  <div class="split">
+    <div class="card">
+      <p>Семейный курорт на пляже Нунгви. Белые корпуса, длинный пляж, ресторан на пирсе. Четыре взрослых бассейна, детский и клуб RIU Land для детей примерно 4–12 лет.</p>
+      <p>All inclusive 24 часа: буфет, тематические рестораны, снек-бар у моря, коктейли. Гости, которые сравнивают несколько Riu, часто называют еду и напитки здесь сильнее. Номера просторные. Минусы: шум в отдельных корпусах и доплата за прямой вид на море.</p>
+      <p>Для пары с детьми это самый прямой вариант. Для двоих без детей Palace обычно спокойнее, если его цена укладывается в потолок.</p>
+    </div>
+    <div class="card prices">
+      <b>Минимум на riu.com, 12.11.2026</b>
+      <p>Double standard от 176 USD<br><span class="ok">14 ночей ≈ 2 220 €</span></p>
+      <p>Боковой вид на море, 185 USD ≈ 2 340 €<br>Superior, 219 USD ≈ 2 770 €<br>Прямой вид, 259–268 USD<br><span class="bad">≈ 3 270–3 390 €</span></p>
+      <p>Это цена «от» за одну показанную ночь. Блок из 14 ночей в высокий сезон агрегаторы уже показывают от ~365 USD, <span class="bad">около 4 600 €</span>.</p>
+    </div>
+  </div>
+  <div class="climate">Лучший климат: июль–сентябрь. На эти даты входной номер часто уже не влезает в 3 000 €. Сначала проверьте июнь и 15 сентября–20 октября: боковой вид на море или superior без прямого вида.</div>
+</section>
+
+<section class="slide">
+  <div class="hotel-head">
+    <div class="kicker">Нунгви · 4* · всё включено в указанные часы</div>
+    <div class="row"><h2>My Blue Hotel</h2><div class="score">Tripadvisor 3,9 / 1 829 · Booking 8,0</div></div>
+  </div>
+  <div class="photos">
+    <figure><img src="photos/myblue-1.jpg" alt="Бассейн My Blue"></figure>
+    <figure><img src="photos/myblue-hotel.jpg" alt="Корпуса вечером"></figure>
+    <figure><img src="photos/myblue-d4.jpg" alt="Океан"></figure>
+    <figure><img src="photos/myblue-d3.jpg" alt="Пляж Нунгви"></figure>
+  </div>
+  <p class="note">Фото 1–2: корпуса на mybluehotel.com. Фото 3–4: пляжные кадры с той же страницы, это общая линия Нунгви.</p>
+  <div class="split">
+    <div class="card">
+      <p>Отель в деревне Нунгви, около часа–полутора от аэропорта. Около 100 номеров. Пляж через сад и лестницу. Корпуса со ступенями, маломобильным гостям будет неудобно.</p>
+      <p>Всё включено: завтрак, поздний завтрак, обед, ужин, снеки и местные напитки в часы, которые назначает отель. Рестораны Mwezi и Ali Baba в отзывах идут за доплату. Три бассейна, небольшой спа, дайв-центр.</p>
+      <p>Пляж гости любят (location 4,7). Оценку тянут вниз уставшие номера, ремонт и неровный буфет. Это единственный отель подборки, чей видимый минимум устойчиво сидит внутри 2 000–3 000 €.</p>
+    </div>
+    <div class="card prices">
+      <b>Агрегаторы, ноябрь 2026</b>
+      <p>Tripadvisor, all inclusive, от 157 USD<br><span class="ok">14 ночей ≈ 1 980 €</span></p>
+      <p>Booking.com, 2 взрослых, от 177,50 USD<br><span class="ok">14 ночей ≈ 2 240 €</span></p>
+      <p>Помесячной сетки отель не публикует. Июль, август и 20 дек – 10 янв на этом берегу заметно дороже минимума. Смотрите итог за 14 ночей, а не цену «от» за одну ночь.</p>
+    </div>
+  </div>
+  <div class="climate">Лучший климат: июль–сентябрь. Из всей подборки именно здесь июнь и вторая половина сентября–октября с наибольшей вероятностью останутся внутри 2 000–3 000 €. Апрель и май дешевле, но это длинные дожди.</div>
+</section>
+
+<section class="slide">
+  <div class="hotel-head">
+    <div class="kicker">Нунгви · 4* · всё включено по открытому прайсу</div>
+    <div class="row"><h2>Sandies Baobab Beach</h2><div class="score">Tripadvisor 4,3 · 735 отзывов</div></div>
+  </div>
+  <div class="photos">
+    <figure><img src="photos/sandies-aerial.jpg" alt="Пляж Sandies"></figure>
+    <figure><img src="photos/sandies-beach.jpg" alt="Сад"></figure>
+    <figure><img src="photos/sandies-room.jpg" alt="Номер"></figure>
+    <figure><img src="photos/sandies-rest.jpg" alt="Ресторан"></figure>
+  </div>
+  <p class="note">Фото: baobabzanzibar.sandies-resorts.com.</p>
+  <div class="split">
+    <div class="card">
+      <p>Небольшой пляжный клуб: около 62 номеров, пресный бассейн, спа Mvua, свой дайв-центр, вечерняя анимация. Спа и погружения не входят в пакет.</p>
+      <p>All inclusive расписан явно. Три еды в Beach Gallery. Вода, соки, домашнее вино, местное пиво, кофе и чай с 10:00 до 24:00. Отдельные крепкие напитки и коктейли с 16:00 до 24:00.</p>
+      <p>Гости хвалят пляж и персонал. Повторяются жалобы на однообразный буфет к концу недели, короткие отключения света и продавцов на пляже. 14 ночей начинаются примерно с 3 410 € даже в самом дешёвом сезоне.</p>
+    </div>
+    <div class="card prices">
+      <b>Baobab room, 2 взрослых, 14 ночей</b>
+      <p><span class="bad">1 апр – 30 июн, 135 USD → 3 410 €</span><br><span class="bad">март и 1 июл – 20 дек, 155 USD → 3 920 €</span><br>8 янв – 28 фев, 180 USD → 4 550 €<br>21–27 дек, 200 USD → 5 050 €<br>28 дек – 7 янв, 360 USD → 9 100 €</p>
+      <p>Июнь сидит в дешёвой сетке вместе с сезоном дождей. Погода уже хорошая, но 14 ночей всё равно около 3 410 €.</p>
+    </div>
+  </div>
+  <div class="climate">Лучший климат: июль–сентябрь. У Sandies он стоит около 3 920 € за 14 ночей. Единственное сухое окно по нижней цене — июнь, около 3 410 €. В потолок 3 000 € две недели здесь не собираются.</div>
+</section>
+
+<section class="slide">
+  <div class="bar"></div>
+  <h1>Рейтинг по отзывам гостей</h1>
+  <p class="sub">Tripadvisor, ноябрь 2026. Это оценка живых отзывов, не звёздность отеля. Длина полосы — доля от 5,0.</p>
+  <div class="bars" id="bars"></div>
+  <div class="call">
+    <p>По отзывам лидирует Riu Palace: и оценка выше, и база втрое больше, чем у Jambo. My Blue отстаёт не из-за пляжа, а из-за номеров и ощущения цены. Sandies держится посередине на небольшой выборке.</p>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="bar"></div>
+  <h1>Кто попадает в 2 000–3 000 €</h1>
+  <p class="sub">14 ночей, 2 взрослых, один номер, всё включено, без перелёта. Суммы округлены до 10 €.</p>
+  <table>
+    <thead><tr><th>Отель</th><th>Отзывы</th><th>Дешёвые даты</th><th>Лучший климат</th><th>В бюджете?</th></tr></thead>
+    <tbody>
+      <tr><td>Riu Palace<br>Нунгви</td><td>4,7<br>5 599</td><td>от 2 190 € по сайту RIU<br>агрегаторы от 3 460 €</td><td>июль–сентябрь<br>часто выше 3 000 €</td><td class="ok">Да, если калькулятор RIU показывает до 3 000 €</td></tr>
+      <tr><td>Riu Jambo<br>Нунгви</td><td>4,6<br>1 965</td><td>от 2 220 € входной номер<br>вид на море от 3 270 €</td><td>июль–сентябрь<br>часто выше 3 000 €</td><td class="ok">Да на входном номере в июне и конце сентября</td></tr>
+      <tr><td>My Blue<br>Нунгви</td><td>3,9<br>1 829</td><td>1 980–2 240 €<br>по агрегаторам</td><td>июнь и сентябрь ближе к бюджету</td><td class="ok">Да. Единственный, кто стабильно внутри вилки</td></tr>
+      <tr><td>Sandies Baobab<br>Нунгви</td><td>4,3<br>735</td><td>от 3 410 €<br>апрель–июнь</td><td>3 920 €<br>июль–20 декабря</td><td class="bad">Нет. 14 ночей выше потолка весь год</td></tr>
+    </tbody>
+  </table>
+  <p>Кендва в таблицу не попала: Gold Zanzibar на две недели около 13 800 €, а Kendwa Rocks не продаёт всё включено.</p>
+</section>
+
+<section class="slide">
+  <div class="bar"></div>
+  <h1>Как выбрать даты</h1>
+  <p class="sub">Один и тот же отель в разные месяцы — это разные поездки и по погоде, и по деньгам.</p>
+  <div class="card" style="border-left:6px solid var(--ocean);margin-bottom:10px">
+    <h3 style="margin:0 0 6px;color:var(--ocean)">Брать в первую очередь</h3>
+    <p>Июнь и 15 сентября–20 октября. Сначала посчитайте Riu Palace, junior suite с видом во двор, и Riu Jambo, standard или боковой вид на море. Если 14 ночей до 3 000 €, это лучшая пара по отзывам.</p>
+  </div>
+  <div class="card" style="border-left:6px solid var(--good);margin-bottom:10px">
+    <h3 style="margin:0 0 6px;color:var(--good)">Если Riu уже дороже потолка</h3>
+    <p>My Blue на те же даты. Ориентир агрегаторов около 2 000–2 240 €. Прочитайте отзывы за последние недели: претензии к ремонту и кондиционеру регулярные, пляж при этом сильный.</p>
+  </div>
+  <div class="card" style="border-left:6px solid var(--coral)">
+    <h3 style="margin:0 0 6px;color:var(--coral)">Не брать, если нужны и погода, и бюджет</h3>
+    <p>Июль и август: лучший климат и почти наверняка выход за 3 000 € у обоих Riu. Апрель и май: в бюджете проще, но это длинные дожди. 20 декабря–10 января: самые высокие тарифы года.</p>
+  </div>
+  <div class="band">Короткий ответ: лучший климат — июль, август и сентябрь. Внутри 2 000–3 000 € за две недели он реалистичен в июне и в конце сентября–октября, в первую очередь в My Blue и во входных номерах Riu.</div>
+</section>
+
+<section class="slide">
+  <div class="bar"></div>
+  <h1>Откуда цифры</h1>
+  <p class="sub">Собрано 12 ноября 2026. Прайс отеля меняется по наличию, это не бронь.</p>
+  <ul>
+    <li>riu.com — минимальные цены «от» Palace и Jambo на 12 ноября 2026. Это одна свободная ночь, не календарь сезона.</li>
+    <li>Booking.com: Palace от 274 USD и оценка 9,0; My Blue от 177,50 USD и оценка 8,0.</li>
+    <li>Tripadvisor: Palace 4,7 (5 599), Jambo 4,6 (1 965), Sandies 4,3 (735), My Blue 3,9 (1 829), у My Blue all inclusive от 157 USD.</li>
+    <li>Sandies, тариф 2026 у B Hudson Tours, USD с человека: 135 / 155 / 180 / 200 / 360 по сезонам.</li>
+    <li>Gold Zanzibar: zanzibarguides.com, 29 октября 2026, от 545 USD с человека.</li>
+    <li>Климат: climate-data.org, Нунгви. Курс ЕЦБ 12.11.2026: 1 EUR = 1,1081 USD.</li>
+    <li>Фото отелей с их официальных сайтов. Кадры пляжей — Wikimedia Commons.</li>
+  </ul>
+  <p class="sub">Файл PowerPoint рядом, в этой же папке: Занзибар-Нунгви-Кендва.pptx. Он откроется, когда на компьютере будет PowerPoint или LibreOffice. Сейчас программы для .pptx нет, поэтому эта страница и есть рабочая презентация.</p>
+</section>
+
+</div>
+<div class="nav">
+  <button type="button" id="prev">Назад</button>
+  <span id="count">1 / 12</span>
+  <button type="button" id="next">Дальше</button>
+</div>
+<script>
+const slides = [...document.querySelectorAll(".slide")];
+let i = 0;
+const count = document.getElementById("count");
+function show(n) {
+  i = (n + slides.length) % slides.length;
+  slides.forEach((s, k) => s.classList.toggle("active", k === i));
+  count.textContent = (i + 1) + " / " + slides.length;
+}
+document.getElementById("prev").onclick = () => show(i - 1);
+document.getElementById("next").onclick = () => show(i + 1);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); show(i + 1); }
+  if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(i - 1); }
+});
+
+const rain = [40,35,138,278,242,77,57,46,39,81,98,92];
+const months = ["Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"];
+const kind = ["hot","hot","","wet","wet","best","best","best","best","best","",""];
+document.getElementById("chart").innerHTML = rain.map((r, n) =>
+  `<div class="col ${kind[n]}"><div>${r}</div><div class="stem" style="height:${Math.round(r/278*140)}px"></div><div>${months[n]}</div></div>`
+).join("");
+
+const ranks = [
+  ["Riu Palace Zanzibar", 4.7, "5 599 отзывов · Booking 9,0"],
+  ["Riu Jambo", 4.6, "1 965 отзывов"],
+  ["Sandies Baobab", 4.3, "735 отзывов"],
+  ["My Blue Hotel", 3.9, "1 829 отзывов · Booking 8,0"]
+];
+document.getElementById("bars").innerHTML = ranks.map((r, n) =>
+  `<div class="brow"><div><b>${n+1}. ${r[0]}</b><div style="color:#5a686e;font-size:12px">${r[2]}</div></div><div class="track"><div class="fill ${n?"":"top"}" style="width:${r[1]/5*100}%"></div></div><b>${String(r[1]).replace(".",",")}</b></div>`
+).join("");
+</script>
+</body>
+</html>
