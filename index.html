@@ -3,78 +3,58 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Занзибар из Еревана — январь 2027</title>
+<title>Занзибар из Еревана — 14 ночей, до 5 000 €</title>
 <style>
   :root {
-    --paper: #f6f1e8;
-    --ink: #18282e;
-    --ocean: #0e4d5c;
-    --deep: #0b303a;
-    --coral: #a64e3a;
-    --sand: #e8d8c0;
-    --muted: #5a686e;
-    --white: #fffcf7;
-    --good: #1e6b52;
+    --paper: #f6f1e8; --ink: #18282e; --ocean: #0e4d5c; --deep: #0b303a;
+    --coral: #a64e3a; --sand: #e8d8c0; --muted: #5a686e; --white: #fffcf7; --good: #1e6b52;
   }
   * { box-sizing: border-box; }
   html, body, .deck { margin: 0; height: 100%; background: #1a1a1a; font-family: Calibri, "Segoe UI", sans-serif; color: var(--ink); }
-  .deck { margin: 0; }
   .slide { display: none; height: 100%; padding: 26px 34px 52px; background: var(--paper); overflow: auto; }
   .slide.active { display: block; }
   h1 { margin: 0 0 8px; font-size: 30px; color: var(--deep); font-weight: 700; line-height: 1.15; }
   h2 { margin: 0; font-size: 24px; color: #fff; }
   .sub { color: var(--muted); margin: 0 0 14px; font-size: 15px; }
-  .kicker { color: var(--sand); font-size: 13px; letter-spacing: .02em; }
+  .kicker { color: var(--sand); font-size: 13px; }
   .hotel-head { background: var(--ocean); color: #fff; margin: -26px -34px 14px; padding: 14px 34px 16px; }
   .hotel-head .row { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; }
   .score { font-size: 14px; text-align: right; }
   .photos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
   .photos img { width: 100%; height: 148px; object-fit: cover; display: block; background: #ddd; }
   .note { color: var(--muted); font-size: 12px; margin: 8px 0 0; line-height: 1.35; }
-  .split { display: grid; grid-template-columns: 1.2fr .8fr; gap: 12px; }
+  .split { display: grid; grid-template-columns: 1.15fr .85fr; gap: 12px; }
   .card { background: var(--white); padding: 12px 14px; }
-  .card p, .card li { margin: 0 0 8px; font-size: 15px; line-height: 1.35; }
-  .card p:last-child, .card li:last-child { margin: 0; }
-  .card ul { margin: 0; padding-left: 18px; }
-  .ok { color: var(--good); font-weight: 700; }
-  .bad { color: var(--coral); font-weight: 700; }
-  .nav {
-    position: fixed; left: 0; right: 0; bottom: 0; height: 44px;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 16px; background: var(--deep); color: #efeae2; font-size: 14px;
-  }
-  button {
-    background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.35);
-    padding: 6px 14px; font: inherit; cursor: pointer;
-  }
+  .card p { margin: 0 0 8px; font-size: 15px; line-height: 1.35; }
+  .card p:last-child { margin: 0; }
+  .nav { position: fixed; left: 0; right: 0; bottom: 0; height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: var(--deep); color: #efeae2; font-size: 14px; }
+  button { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.35); padding: 6px 14px; font: inherit; cursor: pointer; }
   button:hover { background: rgba(255,255,255,.1); }
   .hero { display: none; height: 100%; padding: 0; position: relative; background: #000; overflow: hidden; }
   .hero.active { display: block; height: 100vh; }
   .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .hero .veil {
-    position: absolute; left: 0; right: 0; bottom: 44px;
-    padding: 26px 36px 28px; background: rgba(11,48,58,.9); color: #fff;
-  }
-  .hero h1 { color: #fff; font-size: 42px; }
+  .hero .veil { position: absolute; left: 0; right: 0; bottom: 44px; padding: 26px 36px 28px; background: rgba(11,48,58,.9); color: #fff; }
+  .hero h1 { color: #fff; font-size: 40px; }
   .hero .line { color: var(--sand); font-size: 20px; margin: 0 0 8px; }
-  .hero p { margin: 8px 0 0; font-size: 17px; line-height: 1.35; max-width: 920px; }
+  .hero p { margin: 8px 0 0; font-size: 17px; line-height: 1.35; max-width: 940px; }
   .chip { display: inline-block; background: var(--coral); color: #fff; font-weight: 700; padding: 8px 14px; margin-top: 12px; }
   table { width: 100%; border-collapse: collapse; background: var(--white); font-size: 14.5px; }
   th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--sand); vertical-align: top; }
   th { background: var(--deep); color: #fff; font-weight: 700; }
   td.num, th.num { text-align: right; white-space: nowrap; }
   tr.fit td { background: #e7f3ec; }
+  tr.edge td { background: #f8efe4; }
   .cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
   .box { background: var(--white); padding: 12px 14px; }
   .box h3 { margin: 0 0 6px; font-size: 16px; color: var(--ocean); }
   .box p { margin: 0; font-size: 14.5px; line-height: 1.35; }
-  .big { font-size: 28px; color: var(--deep); font-weight: 700; margin: 0 0 4px; }
+  .big { font-size: 26px; color: var(--deep); font-weight: 700; margin: 0 0 4px; }
   .bars { display: flex; flex-direction: column; gap: 6px; }
-  .brow { display: grid; grid-template-columns: 210px 1fr 78px; gap: 8px; align-items: center; font-size: 13.5px; }
-  .track { height: 14px; background: var(--sand); position: relative; }
-  .fill { height: 14px; background: var(--coral); }
+  .brow { display: grid; grid-template-columns: 230px 1fr 84px; gap: 8px; align-items: center; font-size: 14px; }
+  .track { height: 16px; background: var(--sand); position: relative; }
+  .fill { height: 16px; background: var(--coral); }
   .fill.fit { background: var(--good); }
-  .cap { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--deep); left: 37.5%; }
+  .cap { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--deep); left: 62.5%; }
 </style>
 </head>
 <body>
@@ -83,244 +63,143 @@
 <section class="slide hero active">
   <img src="photos/beach-nungwi.jpg" alt="Пляж Нунгви">
   <div class="veil">
-    <div class="line">Ереван → Занзибар · конец января — начало февраля 2027</div>
-    <h1>Две недели хорошего all inclusive<br>в 3 000 € за номер не собираются</h1>
-    <p>Готового тура на 14 ночей из Еревана нет. Рабочий вариант — 9 ночей, вылет 27 января, возврат 5 февраля. Билет Turkish на эти даты уже опубликован. Номер до 3 000 € на двоих ещё можно удержать. Обратно за девять дней до 14 февраля.</p>
-    <div class="chip">Цены сняты 12 ноября 2026 · это не бронь</div>
+    <div class="line">14 ночей · 23 января – 6 февраля 2027 · отель до 5 000 € на двоих</div>
+    <h1>Нормальный all inclusive<br>на эти даты — Sandies Baobab</h1>
+    <p>Нунгви, море не уходит на отливе. По зимнему тарифу 180 $ с человека номер на 14 ночей выходит около 4 550 €. Рядом по деньгам Diamonds Mapenzi. Riu Palace, Neptune и Melia по-прежнему выше 5 000 €.</p>
+    <div class="chip">Цифры на 12 ноября 2026 · это не бронь на январь</div>
   </div>
 </section>
 
 <section class="slide">
-  <h1>Какие даты вообще подходят</h1>
-  <p class="sub">Вернуться нужно до 14 февраля. Неделя 8–14 февраля не используется. Сегодня 12 ноября 2026, значит поездка в 2027 году.</p>
+  <h1>Даты на 13 и 14 ночей</h1>
+  <p class="sub">Вернуться нужно до недели 8–14 февраля. Суббота 6 февраля — последний спокойный день прилёта домой.</p>
   <div class="cols3">
     <div class="box">
-      <h3>Брать</h3>
-      <p class="big">27 янв – 5 фев</p>
-      <p>9 ночей. Возврат в пятницу, 5 февраля. На эти даты у Turkish есть опубликованный тариф. Неделя перед 14 февраля остаётся свободной.</p>
+      <h3>14 ночей</h3>
+      <p class="big">23 янв – 6 фев</p>
+      <p>Суббота–суббота. Полные две недели. Обратно за неделю до 14 февраля.</p>
     </div>
     <div class="box">
-      <h3>Запасной короткий</h3>
-      <p class="big">25 янв – 1 фев</p>
-      <p>7 ночей. Самый дешёвый опубликованный Turkish в этом окне: от 1 127 € с человека. Возврат 1 февраля, ещё раньше.</p>
+      <h3>13 ночей</h3>
+      <p class="big">24 янв – 6 фев</p>
+      <p>На одну ночь дешевле. Для отелей на грани 5 000 € иногда решает именно эта ночь.</p>
     </div>
     <div class="box">
-      <h3>14 ночей — только если отель влезет</h3>
-      <p class="big">24 янв – 7 фев</p>
-      <p>Возврат в воскресенье, 7 февраля, то есть до запретной недели. Готовой цены билета на ровно эти даты в календаре Turkish не было. Хороший отель на 14 ночей выходит за 3 000 €.</p>
+      <h3>Билет отдельно</h3>
+      <p class="big">1 200–1 600 €</p>
+      <p>С человека, ориентир по соседним датам Turkish. Готовой цены на ровно 23 января – 6 февраля в открытом календаре не было. В 5 000 € билет не входит.</p>
     </div>
   </div>
   <div class="card" style="margin-top:12px">
-    <p>Конец января на Занзибаре — сухой и жаркий сезон, море тёплое, дождей мало (около 35–40 мм). Для пляжа это хорошая погода. Это же европейский высокий сезон, поэтому отели стоят дорого. Самый мягкий климат на острове — июль–сентябрь, но это другие даты.</p>
+    <p>Конец января на Занзибаре жаркий и сухой, море тёплое. Для пляжа это хорошая погода и высокий сезон по цене. Сверх отеля почти везде: сбор острова 5 $ с человека за ночь (на двоих за 14 ночей около 130 €), обязательная страховка ZIC 44 $ с человека, виза около 50 $.</p>
   </div>
 </section>
 
 <section class="slide">
-  <h1>Билеты из Еревана</h1>
-  <p class="sub">Прямого рейса нет. Живые цены на 24 января – 7 февраля Kayak и Google Flights в этот заход не отдали. Ниже то, что Turkish сам показал 12 ноября 2026.</p>
-  <table>
-    <thead>
-      <tr><th>Даты</th><th>Ночей</th><th class="num">С человека</th><th class="num">На двоих</th><th class="num">На четверых</th><th>Откуда цифра</th></tr>
-    </thead>
-    <tbody>
-      <tr class="fit"><td>пн 25 янв – пн 1 фев</td><td>7</td><td class="num">от 1 127 €</td><td class="num">2 254 €</td><td class="num">4 508 €</td><td>Turkish, эконом, туда-обратно</td></tr>
-      <tr class="fit"><td>ср 27 янв – пт 5 фев</td><td>9</td><td class="num">от 1 294 €</td><td class="num">2 588 €</td><td class="num">5 176 €</td><td>Turkish, эконом, туда-обратно</td></tr>
-      <tr><td>вс 24 янв – вс 31 янв</td><td>7</td><td class="num">от 1 376 €</td><td class="num">2 752 €</td><td class="num">5 504 €</td><td>Turkish</td></tr>
-      <tr><td>пт 22 янв – вс 31 янв</td><td>7</td><td class="num">от 1 376 €</td><td class="num">2 752 €</td><td class="num">5 504 €</td><td>Turkish</td></tr>
-      <tr><td>сб 23 янв – вс 31 янв</td><td>7</td><td class="num">от 1 543 €</td><td class="num">3 086 €</td><td class="num">6 172 €</td><td>Turkish</td></tr>
-      <tr><td>24 янв – 7 фев, 14 ночей</td><td>14</td><td class="num">нет цены</td><td class="num">—</td><td class="num">—</td><td>В открытом календаре Turkish этой пары дат не было</td></tr>
-    </tbody>
-  </table>
-  <p class="note">Обычный путь — одна пересадка в Стамбуле, Дохе или Дубае, в пути около 10–15 часов. MiniMondo в ноябре 2026 пишет «билет от 650 $», это пол каталога, не январская дата. Go Travel показывает Ереван–Занзибар–Ереван от 350 000 драм в общей таблице направлений: это тоже пол, не счёт на январь. Рекламные «от 474 $» flydubai и «прямой рейс» eDreams к этим датам не привязаны, в расчёт их не беру.</p>
-</section>
-
-<section class="slide">
-  <h1>Отель на 14 ночей: потолок 3 000 € за номер на двоих</h1>
-  <p class="sub">Это текущий ночной уровень, умноженный на 14 и пересчитанный по курсу ЕЦБ 12 ноября 2026 (1 USD = 0,9024 EUR). Это не подтверждённая цена на конец января. В январе бывает дороже.</p>
+  <h1>Что проходит в 5 000 € за номер на двоих</h1>
+  <p class="sub">Чёрная черта — 5 000 € за 14 ночей. Зелёные полосы — оценки, которые влезают. Курс ЕЦБ 12 ноября 2026: 1 USD = 0,9024 EUR.</p>
   <div class="bars" id="bars"></div>
-  <p class="note">Чёрная черта — 3 000 €. Зелёным отмечен единственный all inclusive из открытого списка, который на сегодняшнем уровне проходит под потолок на 14 ночей. Полоска обрезана на 8 000 €: The Mora (~7 720 €) и Riu Palace (~7 640 €) упираются в край.</p>
+  <p class="note">Sandies посчитан по зимней полосе прайса на 2026 год (8 января – 28 февраля, 180 $ с человека). Diamonds, Baraza, TUI и Riu — текущий ночной уровень агрегаторов, не январский счёт. Neptune — его собственный прайс на январь–февраль, 540 $ за номер. В январе 2027 живая цена может быть выше агрегаторной.</p>
 </section>
 
 <section class="slide">
   <div class="hotel-head">
-    <div class="kicker">Единственный 14-ночный кандидат внутри 3 000 €</div>
+    <div class="kicker">Основной вариант · Нунгви · море весь день</div>
     <div class="row">
-      <h2>My Blue Hotel · Нунгви · 4*</h2>
-      <div class="score">Tripadvisor 3,9 · Booking около 8,0<br>all inclusive по расписанию, не круглосуточный</div>
+      <h2>Sandies Baobab · 4*</h2>
+      <div class="score">Tripadvisor 4,3<br>all inclusive, около 105 номеров</div>
     </div>
   </div>
   <div class="photos">
-    <img src="photos/myblue-1.jpg" alt="My Blue">
-    <img src="photos/myblue-hotel.jpg" alt="My Blue, территория">
-    <img src="photos/myblue-d3.jpg" alt="Пляж у Нунгви">
-    <img src="photos/myblue-d4.jpg" alt="Пляж у Нунгви">
+    <img src="photos/sandies-aerial.jpg" alt="Sandies сверху">
+    <img src="photos/sandies-beach.jpg" alt="Пляж">
+    <img src="photos/sandies-room.jpg" alt="Номер">
+    <img src="photos/sandies-rest.jpg" alt="Ресторан">
   </div>
   <div class="split">
     <div class="card">
-      <p>Около 100 номеров на песке в Нунгви: здесь можно купаться почти в любой час, отлив не уводит море. В пакет входят завтрак, обед, ужин и местные напитки в заданные часы. Рестораны Mwezi и Ali Baba, спа и дайвинг — отдельно. Лестницы, для людей с ограниченной подвижностью неудобно.</p>
-      <p>По текущим ~179 $ за ночь 14 ночей стоят около <b>2 260 €</b> за номер на двоих. Это внутри потолка. Отзывы слабее соседних Riu: жалобы на содержание номеров. Брать имеет смысл только после живого счёта на 24 января – 7 февраля. Если счёт выше 3 000 €, этот вариант закрывается.</p>
+      <p>Северный берег, купаться можно утром и вечером. В пакет входят завтрак, обед, ужин, вода, соки, местное пиво, вино дома и кофе с 10:00 до 24:00. Крепкое и коктейли — с 16:00 до 24:00. Спа и дайвинг отдельно.</p>
+      <p>Зимняя полоса прайса: <b>180 $ с человека</b> в номере на двоих. 14 ночей — около <b>4 550 €</b>. 13 ночей — около <b>4 220 €</b>. Этот лист действует до 31 декабря 2026, на январь 2027 его ещё нет. Итальянские операторы уже продают Sandies на 30 января 2027, так что отель на эти даты работает.</p>
     </div>
     <div class="card">
-      <p><b>На двоих, 14 ночей</b><br>Отель около 2 260 €, если цена не вырастет.<br>Билет на эти даты не опубликован. По соседним датам Turkish — 1 130–1 540 € с человека, то есть 2 300–3 100 € на двоих.</p>
-      <p style="margin-top:8px"><b>Вся поездка на двоих</b><br>ориентир 4 600–5 400 € плюс виза и трансфер.</p>
-      <p style="margin-top:8px"><b>На четверых</b><br>два таких номера около 4 520 € и четыре билета.</p>
+      <p><b>На двоих, 14 ночей</b><br>Отель около 4 550 €.<br>Билеты ориентир 2 400–3 200 €.<br>Поездка около 7 000–7 800 € плюс виза, ZIC и сбор.</p>
+      <p style="margin-top:8px"><b>На четверых</b><br>Два таких номера около 9 100 € и четыре билета.</p>
     </div>
   </div>
+</section>
+
+<section class="slide">
+  <h1>Ещё нормальные варианты на эти даты</h1>
+  <p class="sub">Восточный берег: на отливе море уходит на несколько часов, купаются в бассейне. Зато all inclusive там уместнее: вокруг курортов почти нет своих ресторанов.</p>
+  <table>
+    <thead>
+      <tr><th>Отель</th><th>Берег</th><th class="num">14 ночей, номер</th><th>Почему смотреть</th></tr>
+    </thead>
+    <tbody>
+      <tr class="fit"><td>Sandies Baobab, 4*</td><td>Нунгви</td><td class="num">около 4 550 €</td><td>Единственный с зимним тарифом. Лучший пляж в этом бюджете</td></tr>
+      <tr class="fit"><td>Diamonds Mapenzi, 5*</td><td>Кивенгва</td><td class="num">около 4 590 €</td><td>Текущий уровень ~363 $. Чартер на 24 января ставит его дороже TUI, январский счёт может вырасти</td></tr>
+      <tr class="fit"><td>VOI Kiwengwa, 4*</td><td>Кивенгва</td><td class="num">ниже 5 000 €</td><td>На 24 января 2027 самый дешёвый AI в таблице из Бухареста: 1 900 € с человека за 7 ночей уже с перелётом. Точной цены номера нет</td></tr>
+      <tr class="edge"><td>TUI Blue Bahari, 5*</td><td>Пвани</td><td class="num">под вопросом</td><td>Агрегатор ~473 $ даёт около 5 970 €. В том же чартере 24 января он всего на 180 € с человека дороже VOI. Брать только по счёту</td></tr>
+      <tr class="edge"><td>Riu Jambo, 4–5*</td><td>Нунгви</td><td class="num">3 800–5 800 €</td><td>24 часа all inclusive и море весь день. Полоса высокого сезона для таких отелей 150–230 $ с человека. Запросить счёт</td></tr>
+      <tr class="edge"><td>Baraza, 5*</td><td>Бведжу</td><td class="num">около 5 050 €</td><td>На 14 ночей чуть выше потолка при ~400 $. На 13 ночей около 4 690 €. Отлив</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Чартер Selectravel, Бухарест, 7 ночей, вылет 24 января 2027, цена с человека уже с перелётом: VOI 1 900 €, TUI Blue Bahari 2 080 €, Neptune 2 380 €, Riu Palace 2 420 €, Diamonds Mapenzi 2 500 €, Sultan Sands 2 600 €, Royal Zanzibar 2 800 €. Это сравнение отелей между собой, не цена номера.</p>
 </section>
 
 <section class="slide">
   <div class="hotel-head">
-    <div class="kicker">Что стоит брать, если потолок 3 000 € за номер важнее именно 14 ночей</div>
+    <div class="kicker">Выше 5 000 € на 14 ночей</div>
     <div class="row">
-      <h2>9 ночей · 27 января – 5 февраля</h2>
-      <div class="score">Билет уже есть в календаре<br>Turkish от 1 294 € с человека</div>
+      <h2>Riu Palace и соседние 5*</h2>
+      <div class="score">Лучшие отзывы на севере<br>Tripadvisor 4,7 у Riu Palace</div>
     </div>
   </div>
   <div class="photos">
-    <img src="photos/sandies-aerial.jpg" alt="Sandies Baobab сверху">
-    <img src="photos/sandies-beach.jpg" alt="Пляж Sandies">
-    <img src="photos/sandies-room.jpg" alt="Номер Sandies">
-    <img src="photos/sandies-rest.jpg" alt="Ресторан Sandies">
-  </div>
-  <table>
-    <thead>
-      <tr><th>Отель</th><th>Берег</th><th class="num">9 ночей, номер на двоих</th><th>Заметка</th></tr>
-    </thead>
-    <tbody>
-      <tr class="fit"><td>My Blue, 4*</td><td>Нунгви, купание весь день</td><td class="num">около 1 450 €</td><td>Слабее по отзывам, сильно внутри бюджета</td></tr>
-      <tr class="fit"><td>Paradise Beach, 4*</td><td>Уроа, восточный берег</td><td class="num">около 2 030 €</td><td>Спокойный all inclusive, на отливе море уходит</td></tr>
-      <tr class="fit"><td>Sultan Sands, 5*</td><td>Кивенгва</td><td class="num">около 2 320 €</td><td>Текущий уровень ~286 $ / ночь</td></tr>
-      <tr class="fit"><td>Sandies Baobab, 4*</td><td>Нунгви</td><td class="num">около 2 920 €</td><td>По зимнему прайсу 2026: 180 $ с человека. Прайс 2027 ещё не выложен</td></tr>
-      <tr class="fit"><td>Diamonds Mapenzi, 5*</td><td>Кивенгва</td><td class="num">около 2 950 €</td><td>На грани потолка, если ~363 $ / ночь сохранятся в январе</td></tr>
-      <tr><td>TUI Blue Bahari, 5*</td><td>Кивенгва</td><td class="num">около 3 840 €</td><td>Уже выше потолка даже на 9 ночей</td></tr>
-      <tr><td>Riu Palace, 5*</td><td>Нунгви</td><td class="num">около 4 910 €</td><td>Лучшие отзывы на севере, в бюджет не входит</td></tr>
-    </tbody>
-  </table>
-  <p class="note">На фото Sandies Baobab: это лучший северный all inclusive, который по прошлому зимнему прайсу ещё помещается в 3 000 € на 9 ночей. На 14 ночей тот же прайс даёт около 4 550 €.</p>
-</section>
-
-<section class="slide">
-  <h1>Что просят за хороший отель</h1>
-  <p class="sub">Riu Palace на Нунгви — самый высокий рейтинг среди больших all inclusive севера: Tripadvisor 4,7. На 14 ночей по текущим ~605 $ это около 7 640 € за номер. В 3 000 € он не входит ни в январе, ни на 9 ночей.</p>
-  <div class="photos">
     <img src="photos/palace-hero.jpg" alt="Riu Palace">
-    <img src="photos/palace-poolbeach.jpg" alt="Бассейн и пляж">
+    <img src="photos/palace-poolbeach.jpg" alt="Бассейн">
     <img src="photos/palace-room.jpg" alt="Номер">
     <img src="photos/palace-rest.jpg" alt="Ресторан">
   </div>
   <table>
     <thead>
-      <tr><th>Отель</th><th class="num">Ночь</th><th class="num">14 ночей</th><th>Откуда цена</th></tr>
+      <tr><th>Отель</th><th class="num">14 ночей</th><th>Откуда</th></tr>
     </thead>
     <tbody>
-      <tr><td>Neptune Pwani, 5*</td><td class="num">540–700 $</td><td class="num">6 820–8 840 €</td><td>Их прайс: янв–фев 2026 был 540 $ за double. 23 дек 2026 – 5 янв 2027 — 700 $. После 5 января 2027 прайс не опубликован</td></tr>
-      <tr><td>TUI Blue Bahari, 5*</td><td class="num">~473 $</td><td class="num">~5 970 €</td><td>Текущий уровень агрегатора</td></tr>
-      <tr><td>Diamonds Mapenzi, 5*</td><td class="num">~363 $</td><td class="num">~4 590 €</td><td>Текущий уровень. На 9 ночей ещё около 2 950 €</td></tr>
-      <tr><td>Sandies Baobab, 4*</td><td class="num">360 $ номер</td><td class="num">~4 550 €</td><td>180 $ с человека, полоса 8 янв – 28 фев в прайсе на 2026 год</td></tr>
-      <tr><td>Paradise Beach, 4*</td><td class="num">~250 $</td><td class="num">~3 160 €</td><td>Чуть выше потолка на 14 ночей, нормально на 9</td></tr>
+      <tr><td>Riu Palace Zanzibar, Нунгви</td><td class="num">около 7 640 €</td><td>Текущий уровень ~605 $ за ночь</td></tr>
+      <tr><td>Neptune Pwani, 5*</td><td class="num">около 6 820 €</td><td>Их прайс: январь–февраль, 540 $ за double. Лист после 5 января 2027 ещё не выложен, новогодняя неделя была 700 $</td></tr>
+      <tr><td>TUI Blue Bahari по агрегатору</td><td class="num">около 5 970 €</td><td>Уровень ~473 $. Чартер говорит, что стандартный номер может быть дешевле. См. предыдущий слайд</td></tr>
+      <tr><td>Melia, Royal, Gold, The Mora</td><td class="num">от 6 000 €</td><td>Верхняя полка. На 14 ночей в конце января в 5 000 € не входят</td></tr>
     </tbody>
   </table>
 </section>
 
 <section class="slide">
-  <h1>Двое и четверо</h1>
-  <p class="sub">Потолок 3 000 € — это один номер на двоих. Четверо — это два номера, то есть до 6 000 € за жильё, плюс четыре билета. Семейный номер надо запрашивать отдельно: готовой цены нет.</p>
-  <table>
-    <thead>
-      <tr><th>Сборка</th><th class="num">Двое</th><th class="num">Четверо, 2 номера</th></tr>
-    </thead>
-    <tbody>
-      <tr class="fit">
-        <td>Рекомендую: 27 янв – 5 фев, Turkish от 1 294 €/чел + номер до 3 000 €</td>
-        <td class="num">до 5 600 €</td>
-        <td class="num">до 11 200 €</td>
-      </tr>
-      <tr>
-        <td>Короче и дешевле по билету: 25 янв – 1 фев, Turkish от 1 127 €/чел + My Blue около 1 130 € за 7 ночей</td>
-        <td class="num">около 3 400 €</td>
-        <td class="num">около 6 800 €</td>
-      </tr>
-      <tr>
-        <td>14 ночей, только если My Blue останется около 2 260 €. Билет оценён по соседним датам Turkish, 1 130–1 540 €/чел</td>
-        <td class="num">4 600–5 400 €</td>
-        <td class="num">9 000–10 700 €</td>
-      </tr>
-      <tr>
-        <td>14 ночей в Riu Palace по текущим ~605 $ + те же билеты</td>
-        <td class="num">10 000–10 800 €</td>
-        <td class="num">20 000–21 500 €</td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="card" style="margin-top:12px">
-    <p>Сверх этого: виза Танзании. MiniMondo указывает 50 $ с человека, электронная или по прилёте, паспорт дольше 6 месяцев, страховка обязательна. Трансфер на север острова в пакет агентства входит, при самостоятельной покупке это отдельная машина из аэропорта. Часовой пояс Занзибара на час позади Еревана.</p>
-  </div>
-</section>
-
-<section class="slide">
-  <h1>Турагентства: готового хорошего тура нет</h1>
-  <p class="sub">Смотрел агентства Еревана, у которых вообще есть исходящие пляжные туры, и крупных операторов, которые продают Занзибар из других городов. Публичного all inclusive на 14 ночей из Еревана в конце января нет.</p>
-  <table>
-    <thead>
-      <tr><th>Кто</th><th>Что опубликовано</th><th>Годится ли</th></tr>
-    </thead>
-    <tbody>
-      <tr class="fit"><td>MiniMondo, Ереван, Налбандяна 48/1<br>+374 99 86 08 44</td><td>8 дней, 4* all inclusive от 1 690 $ с человека, перелёт + отель + трансфер. Январь, по их словам, на 20–30% дороже. На двоих это примерно 3 600–4 000 € за всю поездку.</td><td class="ok">Лучшее готовое. Оно на 8 дней, не на 14.</td></tr>
-      <tr><td>Best Tour, besttour.am</td><td>7 дней, Aurora Nungwi, только завтрак, от 1 655 $ с человека, с перелётом.</td><td>Не all inclusive</td></tr>
-      <tr><td>Go Travel</td><td>Карточка «тур на Занзибар, 7 дней, от 1 100 $» без отеля и дат. В таблице билетов Ереван–Занзибар от 350 000 драм.</td><td>Каталог, не январский счёт</td></tr>
-      <tr><td>One Way Tour, Eden Tour, Armon</td><td>Занзибар есть в списке направлений. Цены на январь на сайтах нет.</td><td>Только под запрос</td></tr>
-      <tr><td>Sky Tour, Hyur Service</td><td>Билеты, спа, въездной Армения. Пакета на Занзибар нет.</td><td>Нет</td></tr>
-      <tr><td>Pegas, Tatiko, TUI, Destination2, Itaka</td><td>All inclusive на январь 2027 продают из Москвы, Лондона, Варшавы. Не из Еревана.</td><td>Отель можно смотреть, билет оттуда не подходит</td></tr>
-    </tbody>
-  </table>
-  <p class="note">Отдельные карточки «тур из Еревана» на российских витринах в основном завтрак, 5–11 дней, и не конец января. Пятьдесят сайтов с живым туром на эти даты не существует: у большинства ереванских агентств в экзотике Египет, Эмираты, Кипр и Мальдивы.</p>
-</section>
-
-<section class="slide">
-  <h1>Что я бы собрал сам</h1>
-  <p class="sub">Пакет на две недели из Еревана не найден, поэтому поездка собирается из билета и отеля.</p>
+  <h1>Что запросить на этой неделе</h1>
   <div class="cols3">
     <div class="box">
-      <h3>1. Это основной вариант</h3>
-      <p class="big">27 янв – 5 фев</p>
-      <p>Держать билет Turkish, пока висит цена от 1 294 €. Параллельно запросить счёт на эти 9 ночей у Sandies Baobab и у Paradise Beach. Взять тот, который ниже 3 000 € за номер. Sandies — Нунгви, купание весь день. Paradise — спокойнее и, по текущему уровню, дешевле, но восточный берег с отливом.</p>
+      <h3>1. Sandies Baobab</h3>
+      <p>Счёт на двоих, all inclusive, 23 января – 6 февраля, и запасной на 24 января – 6 февраля. Брать, если номер до 5 000 €. Это главный вариант: Нунгви и понятная зимняя цена.</p>
     </div>
     <div class="box">
-      <h3>2. Если нужны именно 14 ночей</h3>
-      <p class="big">Только My Blue</p>
-      <p>Запросить 24 января – 7 февраля. Оплачивать, если номер на двоих выходит до 3 000 €. В тот же день запросить билет EVN–ZNZ на эти даты у Turkish, Qatar и flydubai. Riu, Neptune, TUI Blue, Melia и Gold на 14 ночей в этот бюджет не входят: это 4 500–8 000 € за номер.</p>
+      <h3>2. Если Sandies дороже</h3>
+      <p>Diamonds Mapenzi и VOI Kiwengwa на те же даты. Оба восточный берег. Diamonds солиднее, VOI дешевле по чартерной таблице на 24 января.</p>
     </div>
     <div class="box">
-      <h3>3. Если пусть собирает агент</h3>
-      <p class="big">MiniMondo</p>
-      <p>Письменный счёт: 2 взрослых или 4, all inclusive, Нунгви, вылет 25–27 января, возврат 1–5 февраля. Просить 8–9 дней. Их готовый пол — 8 дней от 1 690 $ с человека, в январе дороже на 20–30%. Четырнадцать ночей у них готовым продуктом не выложены.</p>
+      <h3>3. Если нужен Riu</h3>
+      <p>Запрашивать Jambo, не Palace. Palace по текущему уровню около 7 640 €. Jambo ещё может влезть, если попадёт в нижнюю часть сезонной полосы.</p>
     </div>
   </div>
   <div class="card" style="margin-top:12px">
-    <p><b>На четверых</b> в основном варианте: два номера до 6 000 € и четыре билета Turkish по 1 294 €, вместе до 11 200 €. Это потолок, не счёт. Виза ещё около 50 $ с человека.</p>
+    <p>Билет из Еревана смотреть в тот же день: Turkish, Qatar, flydubai, окно 23 января – 6 февраля. Готового тура на 14 ночей all inclusive из Еревана по-прежнему нет. MiniMondo собирает 8 дней, не две недели. Пакет из Бухареста или Милана для этой поездки не подходит: вылет не из Еревана.</p>
   </div>
-</section>
-
-<section class="slide">
-  <h1>Откуда цифры и чего в них нет</h1>
-  <div class="split">
-    <div class="card">
-      <p><b>Билеты.</b> Turkish Airlines, примеры туда-обратно, собраны 12 ноября 2026. Kayak на 24 янв – 7 фев открылся без цены. Google Flights страницу не отдал. flydubai показывает минимум без даты. eDreams пишет про прямой рейс — это расходится со всеми остальными источниками, я это отбросил.</p>
-      <p><b>Отели.</b> Ночной уровень — сводка travelzanzibar.io по all inclusive острова (они сами пишут «2026, проверьте»). Официальные прайсы, которые удалось открыть: Sandies на календарь 2026 и Neptune до 5 января 2027. Рейтинги: Tripadvisor и Booking.</p>
-      <p><b>Курс.</b> ЕЦБ, 12 ноября 2026: 1 евро = 1,1081 доллара, поэтому 1 доллар = 0,9024 евро. Суммы за проживание округлены до 10 €.</p>
-    </div>
-    <div class="card">
-      <p><b>Агентства с открытой страницей по Занзибару:</b> MiniMondo, Best Tour, Go Travel, One Way Tour, Eden Tour, Armon, плюс витрина saletur. Без продукта: Sky Tour, Hyur Service. Операторы не из Еревана: Pegas, Tatiko, TUI, Destination2, Itaka.</p>
-      <p><b>Чего нет.</b> Подтверждённой брони на 24 января 2027. Сезонной сетки My Blue. Прайса Sandies на январь 2027. Живого тарифа на ровно 14 ночей. Я не открывал сто отдельных карточек отелей: открытый список all inclusive на острове — это несколько десятков курортов, и все сильные 5* на 14 ночей стоят выше 3 000 € уже на сегодняшнем уровне.</p>
-    </div>
-  </div>
-  <p class="note">Фото отелей — с их сайтов, пляж Нунгви — Wikimedia. Страница для сравнения поездки. Перед оплатой цену нужно переснять: январские тарифы на это направление снимают быстро.</p>
+  <p class="note">Источники: прайс Sandies у B Hudson (календарь 2026), прайс Neptune до 5 января 2027, сводка travelzanzibar.io, чартер Selectravel на 24 января 2027, диапазоны zanzibarguides.com от 1 ноября 2026. Фото — сайты отелей и Wikimedia.</p>
 </section>
 
 </div>
 <div class="nav">
   <button type="button" id="prev">Назад</button>
-  <span id="count">1 / 11</span>
+  <span id="count">1 / 7</span>
   <button type="button" id="next">Дальше</button>
 </div>
 <script>
@@ -338,24 +217,19 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); show(i + 1); }
   if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(i - 1); }
 });
-
 const rows = [
-  ["My Blue, 4*", 2260, true],
-  ["Paradise Beach, 4*", 3160, false],
-  ["Sultan Sands, 5*", 3610, false],
-  ["Zanzibar Bay, 4*", 3780, false],
-  ["Sandies, зима 2026", 4550, false],
-  ["Diamonds Mapenzi, 5*", 4590, false],
-  ["Baraza, 5*", 5050, false],
-  ["Kiwengwa Beach, 5*", 5840, false],
-  ["TUI Blue Bahari, 5*", 5970, false],
-  ["Neptune, прайс", 6820, false],
-  ["Riu Palace, 5*", 7640, false]
+  ["Sandies Baobab, 14 ночей", 4550, true],
+  ["Diamonds Mapenzi", 4590, true],
+  ["Baraza, 14 ночей", 5050, false],
+  ["TUI Blue, уровень агрегатора", 5970, false],
+  ["Neptune, прайс янв–фев", 6820, false],
+  ["Riu Palace", 7640, false]
 ];
 const max = 8000;
 document.getElementById("bars").innerHTML = rows.map(([name, eur, fit]) => {
   const w = Math.min(100, Math.round(eur / max * 100));
-  return `<div class="brow"><div>${name}</div><div class="track"><div class="fill ${fit ? "fit" : ""}" style="width:${w}%"></div><div class="cap"></div></div><b>${eur.toLocaleString("ru-RU")} €</b></div>`;
+  const label = eur.toLocaleString("ru-RU") + " €";
+  return `<div class="brow"><div>${name}</div><div class="track"><div class="fill ${fit ? "fit" : ""}" style="width:${w}%"></div><div class="cap"></div></div><b>${label}</b></div>`;
 }).join("");
 </script>
 </body>
